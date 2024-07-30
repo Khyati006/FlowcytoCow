@@ -6,9 +6,15 @@
     <title>CytoData</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for 3-line menu icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .title {
             color: darkblue;
+        }
+        .navbar-brand-custom {
+            line-height: 50px; /* Adjust as needed */
+            font-size: 24px;   /* Adjust as needed */
         }
     </style>
 </head>
@@ -20,11 +26,9 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <i class="fas fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#">CytoData</a>
+                <a class="navbar-brand navbar-brand-custom" href="#">CytoData</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,7 +40,7 @@
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Submit Data</a></li>
+                    <li><a href="{{ url_for('datasub') }}">Submit Data</a></li>
                     <li><a href="#">Analysis</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -50,11 +54,10 @@
             "CytoData" is a repository designed for storing, retrieving, and analyzing flow cytometry data specific to cow dung and cow urine. This platform is also useful for predicting whether the cow is indigenous or hybrid. It aims to facilitate research and provide insights into bovine health and genetics.
         </p>
         <img src="https://72806e7c-0c8a-49e2-9a67-87d471814343-00-2aw2xeiffx9fv.sisko.replit.dev/static/res_img.jpg" height="320" class="img-fluid">
+    </div>
 
     <!-- Footer -->
-    <footer class="text-center">
-        <p>&copy; 2024 CytoData. All rights reserved.</p>
-    </footer>
+   {% include 'footer.html' %}
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
