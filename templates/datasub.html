@@ -1,1 +1,44 @@
-<p>Hello, world!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data</title>
+</head>
+<body>
+    <h1>Submit Experiment Data</h1>
+    <form action="/submit_data" method="post" enctype="multipart/form-data">
+        <label for="experiment_name">Experiment Name:</label><br>
+        <input type="text" id="experiment_name" name="experiment_name" required><br><br>
+
+        <label for="primary_researcher">Primary Researcher:</label><br>
+        <input type="text" id="primary_researcher" name="primary_researcher" required><br><br>
+
+        <label for="PI_manager">PI/Manager:</label><br>
+        <input type="text" id="PI_manager" name="PI_manager" required><br><br>
+
+        <label for="starting_date">Starting Date:</label><br>
+        <input type="date" id="starting_date" name="starting_date" required><br><br>
+
+        <label for="purpose">Purpose:</label><br>
+        <input type="text" id="purpose" name="purpose" required><br><br>
+
+        <label for="file">Upload File (FCS):</label><br>
+        <input type="file" id="file" name="file" accept=".fcs" required><br><br>
+
+        <label for="end_date">End Date:</label><br>
+        <input type="date" id="end_date" name="end_date"><br><br>
+
+        <label for="comments">Comments:</label><br>
+        <textarea id="comments" name="comments"></textarea><br><br>
+
+        <label for="keyword">Keyword:</label><br>
+        <input type="text" id="keyword" name="keyword"><br><br>
+
+        <label for="organization">Organization:</label><br>
+        <input type="text" id="organization" name="organization"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

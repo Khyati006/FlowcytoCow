@@ -9,6 +9,10 @@ packages = [{include = "repl_nix_flowcytocow"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^3.0.3"
+flask-pymongo = "^2.3.0"
+flask-uploads = "^0.2.1"
+bson = "^0.5.10"
+pymongo = "^4.8.0"
 
 
 [build-system]

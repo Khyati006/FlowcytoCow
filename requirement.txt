@@ -1,2 +1,5 @@
 Flask
 gunicorn
+pymongo
+flask_uploads
+Flask-PyMongo
