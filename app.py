@@ -84,6 +84,27 @@ def result():
     category = request.args.get('category')
     return render_template('sub_result.html', message=message, category=category)
 
+@app.route("/search")
+def search():
+    return render_template('search.html')
+
+@app.route("/search_results", methods=["GET"])
+def search_results():
+    experiment_name = request.args.get('experiment_name')
+    primary_researcher = request.args.get('primary_researcher')
+
+    query = {}
+    if experiment_name:
+        query['experiment_name'] = {"$regex": experiment_name, "$options": "i"}
+    if primary_researcher:
+        query['primary_researcher'] = {"$regex": primary_researcher, "$options": "i"}
+
+    results = collection.find(query)
+    return render_template('search_results.html', results=results)
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    return send_from_directory(app.config['UPLOADED_FILES_DEST'], filename, as_attachment=True)
 
 @app.route('/check')
 def home():

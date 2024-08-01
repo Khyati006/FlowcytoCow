@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    <strong>Experiment Name:</strong> {{ result.experiment_name }}<br>
+                    <strong>Primary Researcher:</strong> {{ result.primary_researcher }}<br>
+                    <strong>PI/Manager:</strong> {{ result.PI_manager }}<br>
+                    <strong>Starting Date:</strong> {{ result.starting_date }}<br>
+                    <strong>Purpose:</strong> {{ result.purpose }}<br>
+                    <a href="{{ url_for('download_file', filename=result.file_path) }}">Download File</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+    <button onclick="window.location.href='/search'">Back to Search</button>
+</body>
+</html>
