@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify,flash,redirect, url_for,get_flashed_messages
 from bson.objectid import ObjectId
 from flask_uploads import UploadSet, configure_uploads, ALL
 from datetime import datetime
@@ -8,6 +8,8 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 app = Flask(__name__)
+
+app.secret_key = '731cb1ec216c770a52d6b2b2bf733e2d' 
 
 # Configuration for MongoDB Atlas
 
@@ -32,7 +34,8 @@ def first_function():
 
 @app.route("/datasub")
 def datasub():
-    return render_template('datasub.html')
+    messages = get_flashed_messages(with_categories=True)
+    return render_template('datasub.html', messages=messages)
 
 
 @app.route('/submit_data', methods=['POST'])
@@ -71,9 +74,15 @@ def submit_data():
         'created_at': datetime.utcnow()
     }).inserted_id
 
-    return jsonify({"msg": "Experiment added", "id": str(experiment_id)}), 201
 
+    flash("Experiment added successfully.", 'success')
+    return redirect(url_for('result', message="Experiment added successfully.", category='success'))
 
+@app.route('/result')
+def result():
+    message = request.args.get('message')
+    category = request.args.get('category')
+    return render_template('sub_result.html', message=message, category=category)
 
 
 @app.route('/check')

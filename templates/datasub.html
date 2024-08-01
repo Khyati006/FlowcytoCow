@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Submit Experiment Data</h1>
+
+
+
     <form action="/submit_data" method="post" enctype="multipart/form-data">
         <label for="experiment_name">Experiment Name:</label><br>
         <input type="text" id="experiment_name" name="experiment_name" required><br><br>
@@ -40,5 +43,14 @@
 
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashMessagesDiv = document.getElementById('flash-messages');
+            setTimeout(() => {
+                flashMessagesDiv.innerHTML = '';
+            }, 50000);  // Adjust the timeout as needed
+        });
+    </script>
 </body>
 </html>
