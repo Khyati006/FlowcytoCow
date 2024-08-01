@@ -1,45 +1,40 @@
 import os
-from flask import Flask,render_template,request,jsonify
-from flask_pymongo import PyMongo
+from flask import Flask, render_template, request, jsonify
 from bson.objectid import ObjectId
 from flask_uploads import UploadSet, configure_uploads, ALL
-from bson.objectid import ObjectId
 from datetime import datetime
+from flask_pymongo import PyMongo
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
-# from flask_sqlalchemy import SQLAlchemy
-# from flask import Flask, session, render_template, url_for, redirect, flash, request
-# from wtforms import Form, fields,TextField, StringField, PasswordField, BooleanField,validators
-# from wtforms.validators import InputRequired, Email, Length, DataRequired
-# from flask_wtf import FlaskForm
-# from flask_uploads import UploadSet, configure_uploads, IMAGES
-# from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+app = Flask(__name__)
 
-app=Flask(__name__)
+# Configuration for MongoDB Atlas
 
-app.config["MONGO_URI"] = "mongodb+srv://jkhyat25:RGrV9qHfheXVDf1d@cluster0.b7fa9cx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = "mongodb+srv://jkhyat25:1BUtbyJ1ekzEoGss@cluster1.nonxkwd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"
 
+# Initialize the MongoDB client
+client = MongoClient(uri, server_api=ServerApi('1'))
+
+db = client['mydatabase']
+collection = db['mycollection']
+
+
+# Configuration for file uploads
 app.config['UPLOADED_FILES_DEST'] = 'uploads'
 files = UploadSet('files', ALL)
 configure_uploads(app, files)
 
-# Initialize PyMongo
-mongo = PyMongo(app)
-
-if mongo is None:
-    raise Exception("Failed to connect to the database")
-
-# Define the collection
-db=mongo.db.experiments
 
 @app.route("/")
 def first_function():
     return render_template('home.html')
-    
+
 @app.route("/datasub")
 def datasub():
     return render_template('datasub.html')
 
-# Endpoint to handle form submission
+
 @app.route('/submit_data', methods=['POST'])
 def submit_data():
     data = request.form
@@ -62,7 +57,7 @@ def submit_data():
         return jsonify({"error": "Invalid file format. Only .fcs files are allowed"}), 400
 
     # Insert into MongoDB
-    experiment_id = db.experiments.insert_one({
+    experiment_id = collection.insert_one({
         'experiment_name': data['experiment_name'],
         'primary_researcher': data['primary_researcher'],
         'PI_manager': data['PI_manager'],
@@ -78,6 +73,18 @@ def submit_data():
 
     return jsonify({"msg": "Experiment added", "id": str(experiment_id)}), 201
 
-if __name__== "__main__":
-  app.run(host='0.0.0.0',debug=True)
-  
+
+
+
+@app.route('/check')
+def home():
+    try:
+        # Test the connection by sending a ping command
+        client.admin.command('ping')
+        return jsonify(message="Pinged your deployment. You successfully connected to MongoDB!")
+    except Exception as e:
+        return jsonify(message=f"An error occurred: {str(e)}"), 500
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

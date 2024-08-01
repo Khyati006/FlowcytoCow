@@ -13,6 +13,7 @@ flask-pymongo = "^2.3.0"
 flask-uploads = "^0.2.1"
 bson = "^0.5.10"
 pymongo = "^4.8.0"
+certifi = "^2024.7.4"
 
 
 [build-system]
